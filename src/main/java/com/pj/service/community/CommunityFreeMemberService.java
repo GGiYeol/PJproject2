@@ -45,5 +45,13 @@ public class CommunityFreeMemberService {
 
 		return member != null;
 	}
+
+	public boolean hasId(String id) {
+		CommunityFreeMemberVO member = mapper.select(id);
+
+		return member != null;
+	}
+	
+	
 }
 

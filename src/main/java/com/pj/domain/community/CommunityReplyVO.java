@@ -5,13 +5,12 @@ import java.time.LocalDateTime;
 import lombok.Data;
 
 @Data
-public class CommunityVO {
+public class CommunityReplyVO {
 
 	private Integer id;
-	private String title;
-	private String content;
-	private String writer;
+	private Integer boardId;
+	private String memberId;
+	private String reply;
 	private LocalDateTime inserted;
 	private LocalDateTime updated;
-	
 }

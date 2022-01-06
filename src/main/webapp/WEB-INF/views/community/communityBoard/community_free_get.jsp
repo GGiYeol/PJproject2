@@ -24,6 +24,7 @@
 <a href="#"><i class="fas fa-home"></i></a><td>
 <tag:nav></tag:nav>
 
+
 <div class="main_container">
 	<div class="row">
 		<div class="col ">

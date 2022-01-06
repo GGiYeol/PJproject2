@@ -5,6 +5,32 @@
 
 <mapper namespace="com.pj.mapper.community.CommunityFreeBoardMapper">
 
+<select id="getCountRows" resultType="int">
+	SELECT COUNT(*) FROM CommunityFreeBoard
+	
+	</select>
+
+<select id="getListPage" resultType="com.pj.domain.community.CommunityFreeBoardVO">
+ SELECT 
+    cfb.id,
+    cfb.title,
+    cfb.content,
+    cfb.writer,
+    cfb.inserted,
+    cfb.updated,
+    cfm.nickName
+FROM
+    CommunityFreeBoard cfb
+        JOIN
+    CommunityFreeMember cfm ON cfb.writer = cfm.id
+WHERE cfb.id > 0
+    <if test = "keyword !=null">
+    	AND cfb.title LIKE CONCAT('%', #{keyword }, '%')
+    </if>
+ORDER BY cfb.id DESC
+LIMIT #{from}, #{items}
+	</select>
+
 <select id="getList" resultType="com.pj.domain.community.CommunityFreeBoardVO">
  SELECT 
     cfb.id,
@@ -18,7 +44,7 @@ FROM
     CommunityFreeBoard cfb
         JOIN
     CommunityFreeMember cfm ON cfb.writer = cfm.id
-ORDER BY id DESC
+ORDER BY cfb.id DESC
 	</select>
 
 <select id="read" resultType="com.pj.domain.community.CommunityFreeBoardVO">

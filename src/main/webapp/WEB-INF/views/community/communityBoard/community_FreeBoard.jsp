@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<%@ taglib prefix = "b" tagdir="/WEB-INF/tags/comFreeBoard" %>
+<%@ taglib prefix ="b" tagdir="/WEB-INF/tags/comFreeBoard" %>
 <%@ taglib prefix="tag" tagdir="/WEB-INF/tags" %>
 <c:set value="${pageContext.request.contextPath }" var="ContextPath"></c:set>
 
@@ -27,14 +27,24 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resource/css/styles.css" />
 
 <title>자유게시판</title>
+
+<style>
+	.mainboard{
+		font: italic 1.5em/1em Georgia, serif ;
+	}
+</style>
 </head>
 <body>
+<div class="body_wrapper">
+
 <a href="#">여기에 홈으로 들어가는 링크 들어갈것</a><td>
 <a href="#"><i class="fas fa-home"></i></a><td>
   <tag:nav></tag:nav>
 
   <div class="main_container">
+<b:navBar></b:navBar>
   	<div class="row">
+  	
   		<div class="col">
   			<h1>자유게시판</h1>
   			<table class="table">
@@ -46,7 +56,7 @@
   						<th>작성일</th>
   					</tr>
   				</thead>
-  				<tbody>
+  				<tbody class = "mainboard">
   					<c:forEach items="${list }" var="comFreeBoard">
   					<tr>
   						<td>${comFreeBoard.id }</td>
@@ -64,8 +74,53 @@
   			</table>
   		</div>
   	</div>
+  <div class="form-inline">
+  
+  <div class = "search_wrap">
+  <div class = "search_area">
+  <input class="form-control" type="text" id="keyword" name="keyword" value="${pageInfo.keyword}" placeholder="검색어를 입력하세요"/>
+			<button id="searchBtn" class="btn btn-primary">Search</button>
+  </div>
+  </div>
+  </div>
+  </div>
   </div>
   
+  <!--  pagination -->
+  <nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center">
+      <c:if test="${pageInfo.hasPrevButton }">
+        <c:url value="/community/communityBoard/community_FreeBoard" var="pageLink">
+          <c:param name="page" value="${pageInfo.leftPageNumber - 1 }"></c:param>
+        </c:url>
+        <li class="page-item">
+          <a class="page-link" href="${pageLink }" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+      </c:if>
+
+      <c:forEach begin="${pageInfo.leftPageNumber}" end="${pageInfo.rightPageNumber }" var="pageNumber">
+        <c:url value="/community/communityBoard/community_FreeBoard" var="pageLink">
+          <c:param name="page" value="${pageNumber }"></c:param>
+        </c:url>
+        <li class="page-item ${pageInfo.currentPage == pageNumber ? 'active' : '' }">
+          <a class="page-link" href="${pageLink }">${pageNumber }</a>
+        </li>
+      </c:forEach>
+
+      <c:if test="${pageInfo.hasNextButton }">
+        <c:url value="/community/communityBoard/community_FreeBoard" var="pageLink">
+          <c:param name="page" value="${pageInfo.rightPageNumber + 1 }"></c:param>
+        </c:url>
+        <li class="page-item">
+          <a class="page-link" href="${pageLink }" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+      </c:if>
+    </ul>
+  </nav>
 
 <!--  modal -->
   <c:if test="${not empty result }">
@@ -88,6 +143,9 @@
       </div>
     </div>
   </c:if>
+  <form id="moveForm" method = "get">
+  <input type="hidden" name="keyword" value="${pageInfo.keyword}">
+  </form>
 
 
 <tag:footer></tag:footer>
@@ -99,6 +157,14 @@
   $(document).ready(function(){
 	  $("#modal1").modal('show');
   });
+  
+  //
+  $(".search_area button").on("click", function(e){
+        e.preventDefault();
+        let val = $("input[name='keyword']").val();
+        moveForm.submit();
+    });
+  
   </script>
   
   <script src="${pageContext.request.contextPath }/resource/js/main.js" type="module"></script>
