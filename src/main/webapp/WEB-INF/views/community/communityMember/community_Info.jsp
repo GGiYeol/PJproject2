@@ -37,6 +37,7 @@
           <div class="form-group">
             <label for="input6">패스워드 확인</label>
             <input type="password" required id="input6" class="form-control">
+             <small class="form-text" id="passwordCheckMessage"></small>
           </div>
           <div class="form-group">
             <label for="input5">닉네임</label>
@@ -101,6 +102,11 @@
               } else {
                 modifyButton.attr("disabled", true);
               }
+              if (passwordCheck && nickNameAble) {
+                  removeButton.removeAttr("disabled");
+                } else {
+                  removeButton.attr("disabled", true);
+                }
             }
 
             // nickNameCheckButton 클릭 시 
@@ -193,6 +199,7 @@
             }
 
             modifyButton.attr("disabled", true); // 수정 버튼 비활성화
+            removeButton.attr("disabled", true); // 수정 버튼 비활성화
 
             passwordInput.keyup(confirmFunction);
             passwordConfirmInput.keyup(confirmFunction);

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.pj.domain.community.CommunityFreeBoardVO;
+import com.pj.domain.community.CommunityPageInfoVO;
 import com.pj.service.community.CommunityFreeBoardService;
 
 import lombok.Setter;
@@ -25,19 +26,21 @@ public class CommunityFreeBoardController {
 	
 	//하나의 게시물을 보는 것 get으로 함.(GetMapping)
 	@GetMapping("/community_FreeBoard")
-	public void list(@RequestParam(value="page", defaultValue="1") Integer page, Model model) {
-		System.out.println(page);
+	public void list(@RequestParam(value = "page", defaultValue = "1")Integer page, 
+					 @RequestParam(value = "keyword", defaultValue = "") String keyword,Model model) {
+		System.out.println(page); 
 		
 		Integer numberPerPage=10;
 		
 		
+		 
+//		List<CommunityFreeBoardVO> list = service.getList();
+		List<CommunityFreeBoardVO> list = service.getListPage(page, numberPerPage, keyword);
+		CommunityPageInfoVO pageInfo = service.getPageInfo(page, numberPerPage);
 		
-		List<CommunityFreeBoardVO> list = service.getList();
-//		List<CommunityFreeBoardVO> list = service.getListPage(page, numberPerPage);
-	 
+		
 		model.addAttribute("list", list);
-		
-		
+		model.addAttribute("pageInfo", pageInfo);
 		
 	}
 	@GetMapping({"community_free_get", "community_Modify"})

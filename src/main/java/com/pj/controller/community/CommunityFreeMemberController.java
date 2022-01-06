@@ -38,6 +38,19 @@ public class CommunityFreeMemberController {
 		}
 	}
 	
+	@RequestMapping("/idcheck") 
+	@ResponseBody
+	public String idcheck(String id) {
+		
+		boolean has = service.hasId(id);
+		
+		if (has) {
+			return "unable";
+		} else { 
+			return "able";
+		}
+	}
+	
 	
 	@GetMapping("/community_signup")
 	public void signup() {
@@ -53,7 +66,7 @@ public class CommunityFreeMemberController {
 		
 		if(ok) {
 			rttr.addFlashAttribute("success", "회원가입 완료");
-			return "redirect:/community/communtiyBoard/community_FreeBoard";
+			return "redirect:/community/communityBoard/community_FreeBoard";
 		} else {
 			return "redirect:/community/communityMember/community_signup";
 			}

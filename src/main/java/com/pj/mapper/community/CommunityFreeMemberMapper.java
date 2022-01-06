@@ -1,9 +1,7 @@
 package com.pj.mapper.community;
-
 import java.util.List;
 
 import com.pj.domain.community.CommunityFreeMemberVO;
-
 
 public interface CommunityFreeMemberMapper {
 

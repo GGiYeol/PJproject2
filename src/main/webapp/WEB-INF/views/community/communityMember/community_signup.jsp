@@ -125,7 +125,7 @@
                   }
 
                   $.ajax({
-                    url : appRoot + "/member/idcheck",
+                    url : appRoot + "/community/communityMember/idcheck",
                     data : {
                       id : idValue
                     },
@@ -174,6 +174,7 @@
                 passwordCheck = true;
               } else {
                 // submitButton.attr("disabled", true);
+                $("#pwCheckMessage").text("패스워드가 일치하지 않습니다").removeClass("text-primary text-danger").addClass("text-danger");
                 passwordCheck = false;
               }
 
@@ -203,7 +204,7 @@
                   }
 
                   $.ajax({
-                    url : appRoot + "/member/nickNameCheck",
+                    url : appRoot + "/community/communityMember/nickNameCheck",
                     data : {
                       nickName : nickName
                     },
